@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+@CrossOrigin
 @RestController
 //@RequestMapping("controller/v1/file_upload")
 public class FileUploadController {
@@ -23,13 +24,23 @@ public class FileUploadController {
     @PostMapping("/upload")
     public void uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
 
+        try {
+            /** using text file only **/
+            if (file.getOriginalFilename().endsWith(".txt")) {
 
-        /** using text file only **/
-        if (file.getOriginalFilename().endsWith(".txt")) {
+                fileUploadService.uploadFile(file);
+            }
 
-            fileUploadService.uploadFile(file);
+        }catch (Exception e){
+            System.out.print("not txt file" + e);
         }
-        System.out.print("not txt file");
+
+//        /** using text file only **/
+//        if (file.getOriginalFilename().endsWith(".txt")) {
+//
+//            fileUploadService.uploadFile(file);
+//        }
+//        System.out.print("not txt file");
 
     }
 }
